@@ -15,8 +15,9 @@ async def summarize():
     text = request["text"]
 
     summary = summarize_text(text)
-    entities = extract_entity(summary)
-    data = { "recognized_entities": entities, "extracted_summary": summary }
+    # entities = extract_entity(summary)
+    # data = { "recognized_entities": entities, "extracted_summary": summary }
+    data = { "extracted_summary": summary }
 
     return quart.Response(response=json.dumps(data, indent=4), status=200)
 

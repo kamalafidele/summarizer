@@ -3,6 +3,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.probability import FreqDist
 from heapq import nlargest
+import nltk
 
 nltk.download('stopwords')
 
