@@ -1,6 +1,6 @@
 transformers
 spacy
 nltk
-heapq
+# heapq
 quart
 quart_cors
