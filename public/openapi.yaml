@@ -8,14 +8,14 @@ servers:
 paths:
   /summarize:
     post:
-      operationId: summarizeText
-      summary: Summarize a text
+      operationId: summarizeScript
+      summary: Summarize a script
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/summarizeTextRequest'
+              $ref: '#/components/schemas/summarizeScriptRequest'
       responses:
         "200":
           description: OK
@@ -26,19 +26,23 @@ paths:
 
 components:
   schemas:
-    summarizeTextRequest:
+    summarizeScriptRequest:
       type: object
       required:
-      - text
-      description: The text to be summarized
+      - script
+      properties:
+        script:
+          type: string
+          description: The script to be summarized
+          required: true
     
     summaryResponse:
       type: object
       properties:
-        extracted_entities:
-          type: array
-          items:
-            type: string
-        summarized_text:
+        summary:
           type: string
+        # extracted_entities:
+        #   type: array
+        #   items:
+        #     type: string
            

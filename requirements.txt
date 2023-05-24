@@ -1,6 +1,0 @@
-transformers
-spacy
-nltk
-# heapq
-quart
-quart_cors
