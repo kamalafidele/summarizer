@@ -1,5 +1,6 @@
 transformers
-sample_texts
 spacy
 nltk
 heapq
+quart
+quart_cors
