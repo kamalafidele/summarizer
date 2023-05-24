@@ -4,7 +4,7 @@ from nltk.stem import PorterStemmer
 from nltk.probability import FreqDist
 from heapq import nlargest
 
-# nltk.download('stopwords')
+nltk.download('stopwords')
 
 def summarize_text(text, num_sentences=5):
     # Tokenize the text into sentences
