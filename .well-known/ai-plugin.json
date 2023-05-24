@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Summarizer",
+  "name_for_model": "Summarizer",
+  "description_for_human": "Plugin for summarizing tv scripts and extract entities",
+  "description_for_model": "Plugin for summarizing tv scripts and extract involved entities, top scorers, teams and matches.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://summarizer-plugin.onrender.com/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://summarizer-plugin.onrender.com/logo.jpg",
+  "contact_email": "kamalafizzet@gmail.com",
+  "legal_info_url": "https://summarizer-plugin.onrender.com/legal"
+}

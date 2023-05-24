@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  title: Summarizer Plugin
+  description: Plugin for summarizing tv scripts and extract entities.
+  version: 'v1'
+servers:
+  - url: https://summarizer-plugin.onrender.com
+paths:
+  /summarize:
+    post:
+      operationId: summarizeText
+      summary: Summarize a text
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/summarizeTextRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/summaryResponse'
+
+components:
+  schemas:
+    summarizeTextRequest:
+      type: object
+      required:
+      - text
+      description: The text to be summarized
+    
+    summaryResponse:
+      type: object
+      properties:
+        extracted_entities:
+          type: array
+          items:
+            type: string
+        summarized_text:
+          type: string
+           

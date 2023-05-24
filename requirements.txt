@@ -1,0 +1,5 @@
+transformers
+sample_texts
+spacy
+nltk
+heapq
