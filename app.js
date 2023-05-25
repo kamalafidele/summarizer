@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const logger = require('morgan');
+const path = require('path');
 
 const SummarizerService = require('./src/services/SummarizerService')
 
@@ -21,14 +22,19 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  return res.sendFile(path.join(__dirname, '/public/home.html'));
+});
+
 app.post('/summarize', async (req, res) => {
     try {
-        const { script } = req.body;
-        const summary = await SummarizerService.generateSummary(script);
+      const { script } = req.body;
+      const summary = await SummarizerService.generateSummary(script);
         
-        return res.status(200).json({ summary });
+      return res.status(200).json({ summary });
     } catch (e) {
-        return res.status(500).json({ error: e });
+      console.log(e);
+      return res.status(500).json({ error: e });
     }
 });
 

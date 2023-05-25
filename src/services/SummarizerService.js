@@ -1,6 +1,6 @@
-import { OpenAI } from "langchain/llms/openai";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { loadSummarizationChain } from "langchain/chains";
+const { OpenAI }  = require('langchain/llms/openai');
+const { RecursiveCharacterTextSplitter } = require('langchain/text_splitter');
+const { loadSummarizationChain } = require('langchain/chains');
 
 const { OPEN_AI_KEY } = process.env;
 
