@@ -41,8 +41,8 @@ components:
       properties:
         summary:
           type: string
-        # extracted_entities:
-        #   type: array
-        #   items:
-        #     type: string
+        entities:
+          type: array
+          items:
+            type: string
            

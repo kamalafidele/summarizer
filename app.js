@@ -30,8 +30,9 @@ app.post('/summarize', async (req, res) => {
     try {
       const { script } = req.body;
       const summary = await SummarizerService.generateSummary(script);
-        
-      return res.status(200).json({ summary });
+      const entities = SummarizerService.extractEntities(summary);
+
+      return res.status(200).json({ summary, entities });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ error: e });
