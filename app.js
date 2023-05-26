@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 app.post('/summarize', async (req, res) => {
     try {
       const { script } = req.body;
-      const summary = await SummarizerService.summarizeWithApi(script);
+      const summary = await SummarizerService.summarizeWithLangchain(script);
       const entitiesStr =  await SummarizerService.extractEntitiesWithAPI(summary);
     
       const entities = entitiesStr.split('[')[1].split(']')[0].split(',');

@@ -17,11 +17,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 class SummarizerService {
-  static async generateSummary(script) {
+  static async summarizeWithLangchain(script) {
     const model = new OpenAI({
       openAIApiKey: OPEN_AI_KEY,
-      temperature: 0,
-      modelName: "gpt-3.5-turbo",
+      temperature: 1,
+      modelName: "text-davinci-003",
       maxTokens: 100,
     });
 
