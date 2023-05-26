@@ -26,7 +26,6 @@
     "node-nlp": "^4.27.0",
     "nodemon": "^2.0.22",
     "openai": "^3.2.1",
-    "python-shell": "^5.0.0",
     "spacy": "^0.0.4",
     "wink-eng-lite-web-model": "^1.5.0",
     "wink-nlp": "^1.14.0"

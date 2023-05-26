@@ -3,10 +3,9 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const logger = require('morgan');
 const path = require('path');
-const fs = require('fs');
-const { PythonShell } = require('python-shell');
 
 const SummarizerService = require('./src/services/SummarizerService');
+
 
 dotenv.config();
 const app = express();
@@ -32,13 +31,9 @@ app.post('/summarize', async (req, res) => {
     try {
       const { script } = req.body;
       const summary = await SummarizerService.summarizeWithApi(script);
-      fs.writeFileSync('summary.txt', summary);
-
-      const result = await PythonShell.run('entity-extraction.py', null);
-      const entities = result[0].split('[')[1].split(']')[0].split(',');
-
-      fs.unlinkSync('./summary.tx');
-
+      const entitiesStr =  await SummarizerService.extractEntitiesWithAPI(summary);
+    
+      const entities = entitiesStr.split('[')[1].split(']')[0].split(',');
       return res.status(200).json({ summary, entities });
     } catch (e) {
       console.log(e);

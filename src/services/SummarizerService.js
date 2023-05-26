@@ -60,8 +60,8 @@ class SummarizerService {
   }
 
   static async extractEntitiesWithAPI(summary) {
-    const prompt = `Extract entities in this text and return only an array of those entities:${summary}`;
-    const res = await openai.createCompletion({ model: 'text-davinci-003', prompt, temperature: 1, max_tokens: 50 });
+    const prompt = `Extract entities in this text and return them in a python list:${summary}`;
+    const res = await openai.createCompletion({ model: 'text-davinci-003', prompt, temperature: 0, max_tokens: 50 });
 
     const { text } = res.data.choices[0];
     const entities = text.trim()
