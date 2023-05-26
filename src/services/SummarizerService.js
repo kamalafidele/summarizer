@@ -21,7 +21,7 @@ class SummarizerService {
     const model = new OpenAI({
       openAIApiKey: OPEN_AI_KEY,
       temperature: 0,
-      modelName: "gpt-3.5-turbo",
+      modelName: "text-davinci-003",
       maxTokens: 100,
     });
 
