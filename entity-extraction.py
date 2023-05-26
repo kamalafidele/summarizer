@@ -1,22 +1,21 @@
-import nltk
+import spacy
+from pathlib import Path
 
-nltk.download('punkt')
-# nltk.download('averaged_perceptron_tagger')
-nltk.download('maxent_ne_chunker')
-nltk.download('words')
 
-def extract_named_entities(text):
-    # Tokenize the text
-    words = nltk.word_tokenize(text)
-    
-    # Part of Speech tagging
-    words_with_pos = nltk.pos_tag(words)
-    
-    # Named Entity Recognition
-    named_entities = nltk.ne_chunk(words_with_pos)
-    
-    # Extract and print named entities
-    return named_entities
+def extract_entity():
+    path = Path('./summary.txt')
+    text = path.read_text()
 
-text = "Apple Inc. is planning to open a new store in San Francisco."
-print(extract_named_entities(text))
+    # Load the pre-trained SpaCy model
+    nlp = spacy.load("en_core_web_sm")
+
+    # Process the text with SpaCy
+    doc = nlp(text)
+    entities = []
+    # Extract named entities
+    for entity in doc.ents:
+        entities.append(entity.text)
+
+    return sorted(set(entities))
+
+print(extract_entity())

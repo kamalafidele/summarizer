@@ -2,11 +2,19 @@ const { OpenAI } = require("langchain/llms/openai");
 const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
 const { loadSummarizationChain } = require("langchain/chains");
 const winkNLP = require("wink-nlp");
+const { OpenAIApi, Configuration } = require('openai');
+const dotenv = require('dotenv');
+dotenv.config();
 
-// Load english language model.
+
 const model = require("wink-eng-lite-web-model");
 
 const { OPEN_AI_KEY } = process.env;
+
+const configuration = new Configuration({
+  apiKey: OPEN_AI_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 class SummarizerService {
   static async generateSummary(script) {
@@ -14,6 +22,7 @@ class SummarizerService {
       openAIApiKey: OPEN_AI_KEY,
       temperature: 0,
       modelName: "gpt-3.5-turbo",
+      maxTokens: 100,
     });
 
     const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000 });
@@ -28,6 +37,14 @@ class SummarizerService {
     return summarizedText;
   }
 
+  static async summarizeWithApi(script) {
+    const prompt = `Summarize this tv script:${script}`;
+    const res = await openai.createCompletion({ model: 'text-davinci-003', prompt, temperature: 1, max_tokens: 100 });
+
+    const { text } = res.data.choices[0];
+    return text.trim();
+  }
+
   static extractEntities(summary) {
     // Instantiate winkNLP & Obtain "its" helper to extract item properties.
     const nlp = winkNLP(model);
@@ -38,7 +55,16 @@ class SummarizerService {
     const entities = [];
     const extracted_entities = doc.entities().out(its.detail)
     extracted_entities.forEach((entity) => entities.push(entity.value));
+    
+    return extracted_entities;
+  }
 
+  static async extractEntitiesWithAPI(summary) {
+    const prompt = `Extract entities in this text and return only an array of those entities:${summary}`;
+    const res = await openai.createCompletion({ model: 'text-davinci-003', prompt, temperature: 1, max_tokens: 50 });
+
+    const { text } = res.data.choices[0];
+    const entities = text.trim()
     return entities;
   }
 }
