@@ -20,8 +20,8 @@ class SummarizerService {
   static async summarizeWithLangchain(script) {
     const model = new OpenAI({
       openAIApiKey: OPEN_AI_KEY,
-      temperature: 1,
-      modelName: "text-davinci-003",
+      temperature: 0,
+      modelName: "gpt-3.5-turbo",
       maxTokens: 100,
     });
 
