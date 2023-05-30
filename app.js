@@ -3,12 +3,23 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const logger = require('morgan');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
+const pdf = require('pdf-parse');
 
 const SummarizerService = require('./src/services/SummarizerService');
 
 
 dotenv.config();
 const app = express();
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: (req, file, cb) => {
+      cb(null, 'saved_file.pdf')
+  }
+})
+
+const upload = multer({ storage });
 
 const { PORT, HOST, ENV_MODE } = process.env;
 
@@ -27,9 +38,24 @@ app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, '/public/home.html'));
 });
 
-app.post('/summarize', async (req, res) => {
+app.post('/summarize', upload.single('file'),async (req, res) => {
     try {
-      const { script } = req.body;
+      let { script = null } = req.body;
+      const { file = null } = req;
+
+      if (file && !file.originalname.includes('.pdf')) {
+        fs.unlinkSync(file.path);
+        return res.status(400).json({ error: 'The file must be pdf' });
+    }
+
+     if (file) {
+      let dataBuffer = fs.readFileSync('./uploads/saved_file.pdf');
+      const { text } = await pdf(dataBuffer);
+      script = text;
+
+      fs.unlinkSync(file.path);
+     }
+
       const summary = await SummarizerService.summarizeWithLangchain(script);
       const entitiesStr =  await SummarizerService.extractEntitiesWithAPI(summary);
     

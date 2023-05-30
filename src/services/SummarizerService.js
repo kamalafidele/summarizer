@@ -25,7 +25,7 @@ class SummarizerService {
       maxTokens: 100,
     });
 
-    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000 });
+    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 3000 });
 
     const docs = await splitter.createDocuments([script]);
     const chain = loadSummarizationChain(model, { type: "map_reduce" });
